@@ -12,6 +12,10 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ $(grep mapper /etc/fstab |grep ' / ' |wc -l) -eq 0 ]; then
+  if [ "${DISABLE_AUTO_RESIZE}" == 'YES' ]; then
+    echo 'rootfs auto-resize is disabled'
+    exit 0
+  fi
   DEVICE=$(readlink -f "$DEVICE")
   DISK=$(echo "$DEVICE" | sed 's/.$//')
   PARTITION=$(echo "$DEVICE" | sed "s|^$DISK||")
@@ -51,7 +55,11 @@ fi
 
   if [ "${LVM}" != "no" ]; then
     ${PVRESIZE} ${PV}
-    ${LVEXTEND} -l +100%FREE ${LV}
+    if [ "${DISABLE_AUTO_RESIZE}" == 'YES' ]; then
+      echo 'rootfs auto-resize is disabled'
+    else
+      ${LVEXTEND} -l +100%FREE ${LV}
+    fi
   fi
 ) || :  # don't fail, partition can be already extended by dracut
 

@@ -138,7 +138,10 @@ else
         ${PROVIDES:+ --provides ${PROVIDES// / --provides }} \
         --deb-no-default-config-files \
         ${CONFIG_FILES} \
-        --package "${OUT}"
+        --package "${OUT}" \
+        --vendor 'CloudLinux' \
+        --maintainer 'CloudLinux Packaging Team <packager@cloudlinux.com>' \
+        --rpm-dist 'cloudlinux'
 fi
 
 echo $(basename ${OUT})
