@@ -114,7 +114,9 @@ else
         ${DEPENDS:+ --depends ${DEPENDS// / --depends }} \
         --replaces "${REPLACES}" \
         --conflicts "${REPLACES}" \
-        --package "${OUT}"
+        --package "${OUT}" --vendor 'CloudLinux' \
+        --maintainer 'CloudLinux Packaging Team <packager@cloudlinux.com>' \
+        --rpm-dist 'cloudlinux'
 #        --provides "${REPLACES}" \
 fi
 
